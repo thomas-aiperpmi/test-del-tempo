@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="In 5 minuti scopri quante ore a settimana puoi toglierti di dosso e da dove partire lunedì.">
+<meta property="og:title" content="Test del tempo – @thomas_aiperpmi">
+<meta property="og:description" content="Quante ore ti puoi togliere di dosso? Il test gratuito per titolari di PMI.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23e3a548'/%3E%3Cpath d='M16 8v8l5 3' stroke='%23121519' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Test del tempo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: una colonna stretta da telefono, un passo alla volta, barra di avanzamento in alto. Look del canale: ufficio scuro, ambra. */
+:root{
+  --ink:#121519; --panel:#1b1f25; --line:#2c323b; --paper:#ece6da; --muted:#9aa1ab; --amber:#e3a548;
+  --c-elimina:#e07a6a; --c-delega:#7fa7d9; --c-ai:#e3a548; --c-tieni:#7fbf95;
+  --display:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+html,body{background:var(--ink);color:var(--paper)}
+*{box-sizing:border-box}html,body{margin:0}body{font-family:var(--body);font-size:16px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:620px;margin:0 auto}
+.top{position:sticky;top:env(safe-area-inset-top,0px);background:var(--ink);padding-block:14px 10px;z-index:5;display:flex;align-items:center;gap:12px}
+.brand{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.bar{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--amber);transition:width .3s}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(40px,10vw,60px)}
+h2{font-size:clamp(30px,7vw,40px)}
+h1 em,h2 em{color:var(--amber)}
+p{margin:0}
+.lead{color:var(--paper);font-size:18px;max-width:34em}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.stack{display:flex;flex-direction:column;gap:18px}
+.step{padding-top:28px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:14px}
+.facts b{color:var(--paper);font-weight:500}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--amber);color:#1a1307;border:0;border-radius:6px;padding:14px 22px;font-weight:600;font-size:16px;align-self:flex-start}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;padding:6px 0;font-size:14px;align-self:flex-start}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.q{display:flex;flex-direction:column;gap:10px}
+.q label.qt{font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:transparent;color:var(--paper);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:15px}
+.chip[aria-pressed="true"]{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.area{display:flex;flex-direction:column;gap:8px}
+.area h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:14px 0 2px}
+.act{border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.act>button{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;background:none;border:0;color:var(--paper);text-align:left;padding:13px 14px;font-size:15px}
+.act .tick{flex:none;width:20px;height:20px;border:1.5px solid var(--muted);border-radius:4px;display:grid;place-items:center;font-size:13px;color:var(--ink)}
+.act.on{border-color:var(--amber)}
+.act.on .tick{background:var(--amber);border-color:var(--amber)}
+.act .hrs{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+.act .hrs .chip{font-size:14px;padding:7px 12px}
+.sel{font-size:13px;color:var(--amber);white-space:nowrap}
+.foot{position:sticky;bottom:0;background:linear-gradient(transparent,var(--ink) 30%);padding-block:22px max(14px,env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+input[type=text],input[type=email]{font:inherit;font-size:16px;background:var(--panel);color:var(--paper);border:1px solid var(--line);border-radius:6px;padding:12px 14px;width:100%;box-sizing:border-box}
+.field{display:flex;flex-direction:column;gap:6px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.consent input{margin-top:3px;accent-color:var(--amber);width:18px;height:18px;flex:none}
+.err{color:var(--c-elimina);font-size:14px}
+.proto{border:1px dashed var(--line);border-radius:6px;padding:10px 12px;font-size:13px;color:var(--muted)}
+/* risultato */
+.big{font-family:var(--display);font-size:clamp(72px,22vw,120px);line-height:.9;color:var(--amber);font-variant-numeric:tabular-nums}
+.big small{font-family:var(--body);font-size:18px;color:var(--paper);margin-left:6px}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.kpis div{background:var(--panel);padding:12px}
+.kpis b{display:block;font-size:22px;font-weight:500;font-variant-numeric:tabular-nums}
+.kpis span{font-size:12px;color:var(--muted)}
+.tipo{border-left:3px solid var(--amber);padding-left:14px}
+.tipo b{font-family:var(--display);font-size:26px;font-weight:400}
+ol.moves{margin:0;padding:0;list-style:none;counter-reset:m;display:flex;flex-direction:column;gap:12px}
+ol.moves li{counter-increment:m;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px}
+ol.moves li::before{content:counter(m);font-family:var(--display);font-size:30px;line-height:1;color:var(--amber)}
+.mv-t{font-weight:600}
+.grp{display:flex;flex-direction:column;gap:10px}
+.grp-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.grp-h h3{margin:0;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.row{display:flex;flex-direction:column;gap:4px;padding:4px 0 10px}
+.row-h{display:flex;justify-content:space-between;gap:10px;font-weight:500}
+.row-h span{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:400;white-space:nowrap;font-size:14px}
+.row p{color:var(--muted);font-size:15px}
+.cta{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.inl{background:none;border:0;padding:0;color:var(--paper);text-decoration:underline;font-size:inherit}
+.consent em{font-style:normal;font-size:12px;letter-spacing:.04em;color:var(--amber)}
+.priv h3{font-size:16px;font-weight:600;margin:10px 0 -8px}
+.priv ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.priv p,.priv li{max-width:36em}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span class="brand">@thomas_aiperpmi</span><div class="bar" aria-hidden="true"><i id="bar"></i></div></div>
+  <main id="app" aria-live="polite"></main>
+</div>
+
+<script>
+const AREAS = {
+  amm:{t:"Soldi e amministrazione", tipo:"Il collo di bottiglia dei conti", tipoD:"Tutto quello che riguarda i soldi passa ancora da te. È la parte più facile da automatizzare: regole chiare, sempre uguali, numeri."},
+  cli:{t:"Clienti e vendite", tipo:"Il centralino dei clienti", tipoD:"I clienti cercano te per qualsiasi cosa, anche per sapere dov'è un ordine. Il tuo valore è nelle trattative, non nelle risposte di routine."},
+  ope:{t:"Ordini e operatività", tipo:"Il pronto intervento", tipoD:"Passi la giornata a controllare e a spegnere incendi. Serve un sistema che ti segnali solo le eccezioni, invece di farti guardare tutto."},
+  com:{t:"Comunicazione e organizzazione", tipo:"Il punto di riferimento di tutti", tipoD:"Il tuo tempo se ne va in riunioni, carte e domande degli altri. Sono cose che servono, ma quasi nessuna deve passare da te: con regole scritte e qualcuno a cui affidarle, smettono di costarti ore."},
+  str:{t:"Il lavoro da titolare", tipo:"", tipoD:""}
+};
+const CAT = {
+  elimina:{t:"Elimina o riduci", c:"var(--c-elimina)", d:"Lavoro che non serve, o che serve molto meno di quanto pensi."},
+  delega:{t:"Delega", c:"var(--c-delega)", d:"Serve, ma non deve farlo il titolare."},
+  ai:{t:"Automatizza con l'AI", c:"var(--c-ai)", d:"Lavoro ripetitivo e sempre uguale: il terreno ideale per l'AI."},
+  tieni:{t:"Tieni, è il tuo lavoro", c:"var(--c-tieni)", d:"Qui servi tu. È dove deve finire il tempo che recuperi."}
+};
+// rate = quota di ore recuperabile; diff = facilità del primo passo
+const ACTS = [
+ {id:"a1",area:"amm",n:"Fatture e controllo di bolle e DDT",cat:"ai",rate:.7,diff:1,
+  az:"Fatture generate dal gestionale partendo dai DDT. Il controllo dei prezzi lo fa l'AI riga per riga e ti segnala solo gli errori.",
+  pr:"Esporta in Excel i DDT dell'ultimo mese e chiedi all'AI di confrontarli con il listino. Conta quanti errori trova."},
+ {id:"a2",area:"amm",n:"Solleciti di pagamento",cat:"ai",rate:.8,diff:1,
+  az:"Promemoria automatici a 7, 15 e 30 giorni dalla scadenza. Tu telefoni solo a chi supera i 60 giorni.",
+  pr:"Attiva i promemoria di scadenza nel tuo programma di fatturazione e scrivi il testo una volta sola."},
+ {id:"a3",area:"amm",n:"Banca, prima nota, riconciliazioni",cat:"delega",rate:.8,diff:2,
+  az:"Lo fa l'amministrazione. Tu ricevi un riepilogo il venerdì e guardi solo le voci strane.",
+  azNo:"Passalo allo studio del commercialista o a un service amministrativo: costa meno delle tue ore.",
+  pr:"Chiedi al commercialista quanto costa tenere lui prima nota e riconciliazione mensile."},
+ {id:"a4",area:"amm",n:"Pagamenti ai fornitori e scadenze",cat:"delega",rate:.75,diff:1,
+  az:"Qualcuno prepara la distinta, tu approvi in 10 minuti una volta a settimana.",
+  azNo:"Un giorno fisso a settimana per tutti i pagamenti, con le scadenze in un calendario condiviso col commercialista.",
+  pr:"Scegli il giorno fisso dei pagamenti e comunicalo: fuori da quel giorno non si paga."},
+ {id:"a5",area:"amm",n:"Guardare i numeri: fatturato, margini, cassa",cat:"ai",rate:.6,diff:2,
+  az:"Un report automatico il lunedì mattina con i 5 numeri che contano. Lo leggi in 5 minuti, poi decidi.",
+  pr:"Scrivi i 5 numeri che vuoi vedere ogni lunedì. È la base per automatizzare il report."},
+ {id:"c1",area:"cli",n:"Preparare preventivi e offerte",cat:"ai",rate:.6,diff:2,
+  az:"Modelli pronti e l'AI che scrive la bozza partendo dal listino. Tu intervieni solo sopra una certa cifra.",
+  pr:"Prendi gli ultimi 5 preventivi: quasi sicuramente si somigliano. Trasformali in un modello unico."},
+ {id:"c2",area:"cli",n:"Rispondere ai clienti per informazioni e stato ordini",cat:"delega",rate:.7,diff:1,
+  az:"Risposte standard per le domande frequenti, gestite da un collaboratore. L'AI prepara le bozze.",
+  azNo:"Risposte standard già pronte e due momenti fissi al giorno per rispondere.",
+  pr:"Elenca le 10 domande che ti fanno più spesso e fai scrivere all'AI una risposta standard per ognuna."},
+ {id:"c3",area:"cli",n:"Seguire agenti e commerciali",cat:"ai",rate:.5,diff:2,
+  az:"Report vendite per agente generato in automatico dai dati di fatturazione. Con loro parli dei numeri, invece di andarli a cercare.",
+  pr:"Decidi i 3 numeri per agente che vuoi vedere ogni settimana."},
+ {id:"c4",area:"cli",n:"Social, sito e marketing",cat:"delega",rate:.6,diff:1,
+  az:"Un calendario mensile e bozze scritte dall'AI. Tu ci metti un'ora al mese per approvare.",
+  azNo:"Bozze scritte dall'AI e un'ora al mese per approvarle tutte insieme.",
+  pr:"Blocca in agenda un'ora al mese solo per approvare i contenuti del mese dopo."},
+ {id:"c5",area:"cli",n:"Visite e trattative con i clienti importanti",cat:"tieni",rate:.1,diff:2,
+  az:"Qui servi tu. Prima della visita l'AI ti prepara la scheda del cliente: storico, ordini, problemi aperti.",
+  pr:"Prima della prossima visita chiedi all'AI un riassunto degli ordini e delle email del cliente."},
+ {id:"o1",area:"ope",n:"Ordini ai fornitori",cat:"delega",rate:.7,diff:2,
+  az:"Regole chiare (scorte minime, fornitori preferiti) e un collaboratore che ordina. L'AI controlla le anomalie.",
+  azNo:"Scorte minime scritte e ordini in giorni fissi: decidi le regole una volta, non a ogni ordine.",
+  pr:"Scrivi le scorte minime dei 20 articoli che ordini più spesso."},
+ {id:"o2",area:"ope",n:"Controllare ordini aperti, consegne e ritardi",cat:"ai",rate:.8,diff:1,
+  az:"Un controllo automatico ogni mattina che segnala solo le eccezioni. Le eccezioni le guarda una persona.",
+  pr:"Esporta gli ordini aperti e chiedi all'AI di evidenziare quelli in ritardo. È già il prototipo del controllo automatico."},
+ {id:"o3",area:"ope",n:"Magazzino e spedizioni",cat:"delega",rate:.9,diff:1,
+  az:"Non è lavoro da titolare. Una persona responsabile e una procedura scritta.",
+  azNo:"Un aiuto part-time o un servizio di logistica esterno costa meno delle tue ore.",
+  pr:"Scrivi in una pagina come si prepara una spedizione. È la procedura da consegnare."},
+ {id:"o4",area:"ope",n:"Urgenze e problemi («chiedi a lui»)",cat:"elimina",rate:.5,diff:2,
+  az:"Regole scritte su chi decide cosa, con un limite di spesa sotto il quale decidono gli altri.",
+  pr:"Fissa una cifra, per esempio 500 euro, sotto la quale i collaboratori decidono senza chiederti."},
+ {id:"o5",area:"ope",n:"Controlli in produzione, cantiere o qualità",cat:"tieni",rate:.3,diff:2,
+  az:"Tieni il controllo ma riduci il tempo: una checklist con foto ogni giorno, e sul posto vai solo quando serve.",
+  pr:"Prepara una checklist di 10 voci che il responsabile ti manda ogni sera con le foto."},
+ {id:"m1",area:"com",n:"Leggere e smistare le email",cat:"ai",rate:.6,diff:1,
+  az:"Filtri automatici e l'AI che ti riassume la posta. Due momenti al giorno invece di cento controlli.",
+  pr:"Da domani leggi le email alle 9 e alle 16, con le notifiche spente nel resto della giornata."},
+ {id:"m2",area:"com",n:"Riunioni interne",cat:"elimina",rate:.5,diff:1,
+  az:"Una riunione a settimana, 30 minuti, con l'ordine del giorno scritto. Il resto si scrive.",
+  pr:"Cancella le riunioni di questa settimana che non hanno un ordine del giorno."},
+ {id:"m3",area:"com",n:"Rispondere alle domande dei collaboratori",cat:"ai",rate:.5,diff:2,
+  az:"Procedure scritte una volta, con l'AI che ti aiuta a scriverle, e una raccolta di risposte che tutti possono consultare.",
+  pr:"Per una settimana annota ogni domanda che ti fanno. Le prime 5 diventano procedure."},
+ {id:"m4",area:"com",n:"Correggere o rifare il lavoro degli altri",cat:"elimina",rate:.6,diff:2,
+  az:"Istruzioni chiare all'inizio costano un'ora. Rifare il lavoro costa ogni settimana.",
+  pr:"La prossima volta che correggi qualcosa, scrivi la regola invece di correggere."},
+ {id:"m5",area:"com",n:"Burocrazia: documenti, banche, assicurazioni, bandi",cat:"delega",rate:.5,diff:2,
+  az:"Al consulente giusto. L'AI ti riassume contratti e documenti lunghi prima di firmare.",
+  pr:"Dai all'AI il prossimo contratto lungo da leggere e chiedile i 5 punti critici."},
+ {id:"s1",area:"str",n:"Strategia, nuovi clienti, pensare al futuro",cat:"tieni",rate:0,diff:3,
+  az:"Questo è il lavoro del titolare. Il tempo che recuperi deve finire qui.",
+  pr:""}
+];
+const HRS = [{t:"meno di 1 h",v:.5},{t:"1–3 h",v:2},{t:"3–6 h",v:4.5},{t:"più di 6 h",v:8}];
+const TEAM = ["Solo io","2–5","6–15","16–50","più di 50"];
+const WEEK = [{t:"meno di 40",v:38},{t:"40–50",v:45},{t:"50–60",v:55},{t:"più di 60",v:65}];
+const WEEKS_YEAR = 46;
+
+const S = {step:0, sending:false, inviato:null, daLink:false, team:null, week:null, office:null, sel:{}, open:null, nome:"", email:"", ok:false, mkt:false, priv:false, err:""};
+const app = document.getElementById("app");
+const bar = document.getElementById("bar");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = (n, d=0) => n.toLocaleString("it-IT",{maximumFractionDigits:d,minimumFractionDigits:d});
+const go = n => { S.step = n; render(); window.scrollTo(0,0); };
+const noStaff = () => S.team === 0 || S.office === false;
+
+function render(){
+  bar.style.width = [4,30,62,85,100][S.step] + "%";
+  app.innerHTML = S.priv ? privacy() : [intro, profilo, attivita, email, risultato][S.step]();
+}
+function openPriv(e){ if(e){e.preventDefault();e.stopPropagation();} S.priv=true; render(); window.scrollTo(0,0); }
+function closePriv(){ S.priv=false; render(); window.scrollTo(0,0); }
+
+const TITOLARE = "Thomas Barbiero";
+const INDIRIZZO = "Via Cavour 19, 36016 Thiene (VI)";
+const CONTATTO = "thomas.aiperpmi@gmail.com";
+function privacy(){
+  return `<section class="step stack priv">
+    <p class="muted small">Ultimo aggiornamento: ottobre 2026</p>
+    <h2>Informativa <em>privacy</em></h2>
+    <p class="lead">In breve: usiamo il tuo nome e la tua email per mandarti il risultato del test. Ti mandiamo altre email solo se l'hai chiesto tu con la seconda casella. Non vendiamo, non cediamo e non diffondiamo i tuoi dati a nessuno.</p>
+
+    <h3>1. Chi tratta i tuoi dati</h3>
+    <p>Titolare del trattamento è ${TITOLARE}, ${INDIRIZZO}. Per qualsiasi richiesta sulla privacy scrivi a <b>${CONTATTO}</b>.</p>
+
+    <h3>2. Quali dati raccogliamo</h3>
+    <ul>
+      <li>Nome ed email, che inserisci tu.</li>
+      <li>Le risposte al test: quante persone lavorano in azienda, le ore settimanali e le attività che hai scelto. Non chiediamo il nome dell'azienda, il fatturato, l'età né altri dati personali.</li>
+      <li>La data, l'ora e le caselle che hai spuntato, per poter dimostrare il tuo consenso.</li>
+    </ul>
+    <p>Non raccogliamo dati sensibili. Le risposte restano nel tuo browser finché non premi «Ricevi il mio risultato».</p>
+
+    <h3>3. Perché li usiamo e su quale base</h3>
+    <ul>
+      <li><b>Mandarti il risultato del test.</b> È il servizio che hai chiesto (art. 6.1.b del GDPR). Senza la tua email non possiamo inviarlo.</li>
+      <li><b>Mandarti altre email</b> con casi pratici, strumenti e, a volte, proposte di servizi a pagamento. Solo se hai spuntato la seconda casella, che è facoltativa (art. 6.1.a del GDPR). In quel caso usiamo anche le tue risposte per mandarti contenuti adatti alla tua situazione, per esempio sull'amministrazione invece che sulle vendite. Nessuna decisione automatica ha effetti legali o simili su di te.</li>
+    </ul>
+    <p><b>Senza il tuo consenso non ricevi pubblicità né newsletter: solo il risultato che hai chiesto.</b> Se non dai il consenso facoltativo, il servizio funziona lo stesso.</p>
+
+    <h3>4. A chi li diamo</h3>
+    <p><b>A nessuno, per nessun motivo commerciale.</b> I tuoi dati non vengono venduti, ceduti, affittati o scambiati, e non vengono diffusi. Non li usano le aziende in cui Thomas lavora.</p>
+    <p>Per inviare le email usiamo MailerLite, che tratta i dati solo per nostro conto e secondo le nostre istruzioni, con un contratto di trattamento dati firmato (art. 28 del GDPR). I dati sono conservati su server nell'Unione Europea. Se in casi particolari dovessero passare fuori dall'UE, sono protetti dalle clausole contrattuali standard approvate dalla Commissione Europea. Possiamo comunicare i dati alle autorità solo se lo impone la legge.</p>
+
+    <h3>5. Per quanto tempo li teniamo</h3>
+    <ul>
+      <li>Solo risultato (senza consenso facoltativo): cancelliamo email e risposte entro 12 mesi dall'invio.</li>
+      <li>Con il consenso alle email: finché non ti cancelli. Se per 24 mesi non apri nessuna email, cancelliamo i tuoi dati.</li>
+      <li>Quando ti cancelli, conserviamo solo la prova che l'hai fatto, per non scriverti più.</li>
+    </ul>
+
+    <h3>6. I tuoi diritti</h3>
+    <p>In qualsiasi momento puoi chiedere di vedere i tuoi dati, correggerli, cancellarli, limitarne l'uso o riceverli in un file (artt. 15-20 del GDPR). Puoi opporti al loro uso e ritirare il consenso senza conseguenze. Per non ricevere più email basta il link «cancellati» in fondo a ogni email. Per tutto il resto scrivi a ${CONTATTO}: rispondiamo entro 30 giorni.</p>
+    <p>Se pensi che i tuoi dati siano trattati in modo scorretto, puoi presentare reclamo al Garante per la protezione dei dati personali (garanteprivacy.it).</p>
+
+    <h3>7. Sicurezza e cookie</h3>
+    <p>Accesso ai dati limitato al titolare, account protetti con autenticazione a due fattori. Questa pagina non usa cookie di profilazione né pubblicitari.</p>
+
+    <h3>8. A chi è rivolto</h3>
+    <p>Il test è pensato per titolari e professionisti maggiorenni.</p>
+
+    <div class="foot"><button class="btn" onclick="closePriv()">Torna al test</button></div>
+  </section>`;
+}
+
+function intro(){
+  return `<section class="step stack">
+    <h1>Quante ore ti puoi <em>togliere di dosso?</em></h1>
+    <p class="lead">Spunta le cose che fai in una settimana normale e quanto tempo ti prendono. In 5 minuti ricevi via email cosa eliminare, cosa delegare, cosa far fare all'AI e da dove partire lunedì.</p>
+    <div class="facts"><span><b>5 minuti</b> dal telefono</span><span><b>3 domande</b> su di te</span><span>Nessun dato sull'azienda</span></div>
+    <button class="btn" onclick="go(1)">Inizia il test</button>
+    <button class="link" onclick="openPriv()">Informativa privacy</button>
+  </section>`;
+}
+
+function chips(list, cur, fn){
+  return `<div class="chips">${list.map((x,i)=>`<button class="chip" aria-pressed="${cur===i}" onclick="${fn}(${i})">${esc(x.t||x)}</button>`).join("")}</div>`;
+}
+function setTeam(i){ S.team=i; if(i===0) S.office=false; render(); }
+function setWeek(i){ S.week=i; render(); }
+function setOffice(i){ S.office = i===0; render(); }
+
+function profilo(){
+  const officeQ = S.team !== null && S.team > 0 ? `<div class="q"><label class="qt">Hai qualcuno che segue ufficio o amministrazione?</label>${chips(["Sì","No"], S.office===null?null:(S.office?0:1), "setOffice")}</div>` : "";
+  const ready = S.team!==null && S.week!==null && (S.team===0 || S.office!==null);
+  return `<section class="step stack">
+    <p class="muted small">Passo 1 di 3</p>
+    <h2>Partiamo da te</h2>
+    <div class="q"><label class="qt">Quante persone lavorano in azienda, te compreso?</label>${chips(TEAM, S.team, "setTeam")}</div>
+    <div class="q"><label class="qt">Quante ore lavori in una settimana normale?</label>${chips(WEEK, S.week, "setWeek")}</div>
+    ${officeQ}
+    <div class="foot"><button class="btn" ${ready?"":"disabled"} onclick="go(2)">Avanti</button><button class="link" onclick="go(0)">Indietro</button></div>
+  </section>`;
+}
+
+function toggleAct(id){
+  if(S.sel[id]!==undefined){ if(S.open===id){ delete S.sel[id]; S.open=null; } else S.open=id; }
+  else { S.sel[id]=null; S.open=id; }
+  render();
+  const el=document.getElementById("act-"+id); if(el) el.scrollIntoView({block:"nearest"});
+}
+function setHrs(id,i){ S.sel[id]=i; S.open=null; render(); }
+
+function attivita(){
+  const done = Object.values(S.sel).filter(v=>v!==null).length;
+  const groups = Object.keys(AREAS).map(a => {
+    const items = ACTS.filter(x=>x.area===a).map(x => {
+      const on = S.sel[x.id]!==undefined, h = S.sel[x.id];
+      const hrs = on && S.open===x.id ? `<div class="hrs"><span class="muted small">Quanto ti prende a settimana?</span>${chips(HRS, h, "setHrs.bind(null,'"+x.id+"')")}</div>` : "";
+      return `<div class="act ${on?"on":""}" id="act-${x.id}">
+        <button onclick="toggleAct('${x.id}')" aria-expanded="${S.open===x.id}"><span>${esc(x.n)}</span>
+        ${on && h!==null ? `<span class="sel">${HRS[h].t}</span>` : `<span class="tick">${on?"✓":""}</span>`}</button>${hrs}</div>`;
+    }).join("");
+    return `<div class="area"><h3>${AREAS[a].t}</h3>${items}</div>`;
+  }).join("");
+  return `<section class="step stack">
+    <p class="muted small">Passo 2 di 3</p>
+    <h2>Cosa fai tu, <em>di persona?</em></h2>
+    <p class="muted">Tocca solo le cose che fai tu, non quelle dei collaboratori, e indica quanto tempo ti prendono in una settimana normale. Basta una stima.</p>
+    ${groups}
+    <div class="foot"><button class="btn" ${done>=3?"":"disabled"} onclick="go(3)">Avanti</button><span class="muted small">${done<3?`Scegline almeno 3 (${done}/3)`:`${done} attività scelte`}</span></div>
+  </section>`;
+}
+
+function email(){
+  return `<section class="step stack">
+    <p class="muted small">Passo 3 di 3</p>
+    <h2>Dove ti mando <em>il risultato?</em></h2>
+    <p class="muted">Ricevi il risultato completo: ore recuperabili, cosa eliminare, delegare e automatizzare, e le 3 mosse da fare lunedì.</p>
+    <div class="field"><label for="f-nome">Il tuo nome</label><input id="f-nome" type="text" autocomplete="given-name" value="${esc(S.nome)}" oninput="S.nome=this.value"></div>
+    <div class="field"><label for="f-email">L'email che leggi davvero (anche la personale)</label><input id="f-email" type="email" autocomplete="email" inputmode="email" value="${esc(S.email)}" oninput="S.email=this.value"></div>
+    <label class="consent"><input id="f-ok" type="checkbox" ${S.ok?"checked":""} onchange="S.ok=this.checked"><span>Ho letto l'<button type="button" class="inl" onclick="openPriv(event)">informativa privacy</button> e voglio ricevere il risultato via email. <em>Obbligatorio</em></span></label>
+    <label class="consent"><input id="f-mkt" type="checkbox" ${S.mkt?"checked":""} onchange="S.mkt=this.checked"><span>Voglio ricevere anche le email di Thomas con casi pratici su AI e tempo, al massimo una a settimana. Mi cancello quando voglio con un clic. <em>Facoltativo</em></span></label>
+    <p class="muted small">La tua email non viene venduta né data a nessuno. Senza la seconda spunta ricevi solo il risultato, nient'altro.</p>
+    ${S.err?`<p class="err">${esc(S.err)}</p>`:""}
+    <div class="foot"><button class="btn" id="btn-invia" onclick="invia()" ${S.sending?"disabled":""}>${S.sending?"Invio in corso…":"Ricevi il mio risultato"}</button><button class="link" onclick="go(2)">Indietro</button></div>
+  </section>`;
+}
+const ML = {acc:"2711676", solo:"201297588381550500", news:"201298004476430073"};
+const PAGE_URL = "https://thomas-aiperpmi.github.io/test-del-tempo/";
+function codice(){
+  const sel = Object.entries(S.sel).filter(([k,v])=>v!==null).map(([k,v])=>k+v).join("-");
+  return "t"+S.team+"w"+S.week+"o"+(S.office?1:0)+"_"+sel;
+}
+function daCodice(c){
+  const m = /^t(\d)w(\d)o([01])_([a-z0-9-]*)$/.exec(c||""); if(!m) return false;
+  S.team=+m[1]; S.week=+m[2]; S.office=m[3]==="1"; S.sel={};
+  m[4].split("-").filter(Boolean).forEach(x=>{ const id=x.slice(0,2), v=+x.slice(2); if(ACTS.some(a=>a.id===id) && HRS[v]) S.sel[id]=v; });
+  return Object.keys(S.sel).length>0 && TEAM[S.team]!==undefined && WEEK[S.week]!==undefined;
+}
+async function invia(){
+  if(S.sending) return;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(S.email.trim())){ S.err="Controlla l'email: sembra incompleta."; return render(); }
+  if(!S.ok){ S.err="Spunta la prima casella: senza, non posso mandarti il risultato."; return render(); }
+  S.err=""; S.sending=true; render();
+  const R = calcola();
+  const recW = Math.max(0, Math.round(R.rec*2)/2);
+  const mossa = m => m ? (m.n + ": " + m.pr).slice(0,250) : "";
+  const f = new FormData();
+  f.append("fields[email]", S.email.trim());
+  f.append("fields[name]", S.nome.trim().split(" ")[0] || "");
+  f.append("fields[ore_settimana]", fmt(recW, recW%1?1:0));
+  f.append("fields[ore_anno]", fmt(Math.round(R.rec*WEEKS_YEAR)));
+  f.append("fields[giornate]", fmt(Math.round(R.rec*WEEKS_YEAR/8)));
+  f.append("fields[profilo]", R.topArea ? AREAS[R.topArea].tipo : "Tempo già ben usato");
+  f.append("fields[mossa_1]", mossa(R.moves[0]) || "Proteggi il tempo che dedichi a clienti e strategia.");
+  f.append("fields[mossa_2]", mossa(R.moves[1]) || "-");
+  f.append("fields[mossa_3]", mossa(R.moves[2]) || "-");
+  f.append("fields[link_risultato]", PAGE_URL + "?r=" + codice());
+  f.append("ml-submit", "1"); f.append("anticsrf", "true");
+  try{
+    const res = await fetch(`https://assets.mailerlite.com/jsonp/${ML.acc}/forms/${S.mkt?ML.news:ML.solo}/subscribe`, {method:"POST", body:f});
+    const j = await res.json().catch(()=>({}));
+    S.inviato = res.ok && j.success !== false;
+  }catch(e){ S.inviato = false; }
+  S.sending=false; go(4);
+}
+
+function calcola(){
+  const rows = ACTS.filter(x => S.sel[x.id]!==undefined && S.sel[x.id]!==null).map(x => {
+    let rate = x.rate, az = x.az;
+    if(x.cat==="delega" && noStaff()){ rate = x.rate*.75; az = x.azNo || x.az; }
+    return {...x, h:HRS[S.sel[x.id]].v, rate, az};
+  });
+  let tot = rows.reduce((s,r)=>s+r.h,0);
+  const week = WEEK[S.week].v;
+  const cap = week*.9; let scaled=false;
+  if(tot>cap){ const k=cap/tot; rows.forEach(r=>r.h*=k); tot=cap; scaled=true; }
+  rows.forEach(r=>{ r.rec = r.h*r.rate; });
+  const rec = rows.reduce((s,r)=>s+r.rec,0);
+  const byArea = {}; rows.filter(r=>r.cat!=="tieni").forEach(r=>{ byArea[r.area]=(byArea[r.area]||0)+r.rec; });
+  const topArea = Object.entries(byArea).sort((a,b)=>b[1]-a[1])[0];
+  const moves = rows.filter(r=>r.pr && r.rec>0).sort((a,b)=>(b.rec*(b.diff===1?1.3:1))-(a.rec*(a.diff===1?1.3:1))).slice(0,3);
+  return {rows, tot, rec, week, scaled, topArea: topArea?topArea[0]:null, moves};
+}
+
+function risultato(){
+  const R = calcola();
+  const recW = Math.max(0, Math.round(R.rec*2)/2);
+  const year = Math.round(R.rec*WEEKS_YEAR);
+  const days = Math.round(R.rec*WEEKS_YEAR/8);
+  const nome = S.nome.trim() ? esc(S.nome.trim().split(" ")[0]) + ", " : "";
+  const tipo = R.topArea ? AREAS[R.topArea] : null;
+  const order = ["ai","delega","elimina","tieni"];
+  const groups = order.map(c => {
+    const rs = R.rows.filter(r=>r.cat===c).sort((a,b)=>b.rec-a.rec);
+    if(!rs.length) return "";
+    const sum = rs.reduce((s,r)=>s+r.rec,0);
+    return `<div class="grp"><div class="grp-h"><h3><span class="dot" style="background:${CAT[c].c}"></span>${CAT[c].t}</h3><span class="muted small">${c==="tieni"?"tempo da proteggere":"−"+fmt(sum,1)+" h/sett."}</span></div>
+      <p class="muted small">${CAT[c].d}</p>
+      ${rs.map(r=>`<div class="row"><div class="row-h">${esc(r.n)}<span>${fmt(r.h,1)} h${r.cat==="tieni"?"":" → −"+fmt(r.rec,1)+" h"}</span></div><p>${esc(r.az)}</p></div>`).join("")}
+    </div>`;
+  }).join("");
+  return `<section class="step stack">
+    ${S.daLink?"":(S.inviato===false?`<p class="err">Non sono riuscito a inviarti l'email. Il risultato è qui sotto: salvalo con uno screenshot, oppure riprova più tardi.</p>`:(S.inviato?`<p class="muted small">Ti ho mandato il risultato via email. Se non lo vedi, controlla in Spam o Promozioni.</p>`:""))}
+    <p class="muted small">Il tuo test del tempo</p>
+    <h2>${nome}puoi toglierti di dosso circa</h2>
+    <div class="big">${fmt(recW,recW%1?1:0)}<small> ore a settimana</small></div>
+    <div class="kpis"><div><b>${fmt(year)}</b><span>ore all'anno</span></div><div><b>${fmt(days)}</b><span>giornate di 8 ore</span></div><div><b>${fmt(R.tot,0)} h </b><span>su ~${R.week} h: le attività che hai indicato</span></div></div>
+    ${R.scaled?`<p class="muted small">Le ore indicate superavano la tua settimana: le ho riportate in proporzione.</p>`:""}
+    ${tipo?`<div class="tipo"><span class="muted small">Il tuo profilo</span><br><b>${tipo.tipo}</b><p class="muted">${tipo.tipoD}</p></div>`:""}
+    ${recW<2?`<p class="muted">Il tuo tempo è già messo bene: quasi tutto quello che hai indicato è lavoro che spetta a te. Il margine è piccolo, ma c'è.</p>`:""}
+    ${R.moves.length?`<h2>Da lunedì: <em>${R.moves.length===1?"la tua mossa":"le tue "+R.moves.length+" mosse"}</em></h2>`:""}
+    <ol class="moves">${R.moves.map(m=>`<li><div><div class="mv-t">${esc(m.n)}</div><p class="muted">${esc(m.pr)}</p><p class="small" style="color:var(--amber)">Vale circa ${fmt(m.rec,1)} h a settimana</p></div></li>`).join("")}</ol>
+    <h2>Attività per attività</h2>
+    ${groups}
+    <div class="cta"><b>Vuoi il dato vero, non la stima?</b><p class="muted">Questo test parte dalle tue stime. Il test dei 5 giorni misura come usi davvero il tempo: una riga ogni mezz'ora, per una settimana. Io l'ho fatto per tre settimane ed è la cosa più utile che ho fatto per il mio tempo.</p><p class="small">${S.mkt?"Nei prossimi giorni ti mando il foglio via email.":"Se lo vuoi, rifai il test e spunta la casella delle email: ti mando il foglio."}</p></div>
+    <p class="muted small">Stime calcolate sulle tue risposte e su ${WEEKS_YEAR} settimane lavorative all'anno. Ogni settimana racconto su Instagram, @thomas_aiperpmi, cosa ho provato davvero nella mia azienda.</p>
+    <button class="link" onclick="ricomincia()">Rifai il test</button>
+  </section>`;
+}
+function ricomincia(){ try{history.replaceState(null,"",location.pathname);}catch(e){} Object.assign(S,{daLink:false,inviato:null,team:null,week:null,office:null,sel:{},open:null,err:""}); go(0); }
+function esempio(){
+  Object.assign(S,{team:1,week:2,office:true,nome:"Marco",email:"esempio@email.it",ok:true,mkt:true,open:null,
+    sel:{a1:2,a2:1,a5:1,c1:2,c2:2,o2:1,o4:1,m1:2,m2:1,c5:1,s1:0}});
+  go(4);
+}
+try{ const r = new URLSearchParams(location.search).get("r"); if(r && daCodice(r)){ S.daLink=true; S.step=4; } }catch(e){}
+render();
+</script>
+
+</body>
+</html>
